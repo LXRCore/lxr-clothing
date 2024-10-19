@@ -32,7 +32,7 @@ files {
 }
 
 dependencies {
-	'LXR-core'
+	'lxr-core'
 }
 
 lua54 'yes'
