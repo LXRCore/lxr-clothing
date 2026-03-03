@@ -1,4 +1,87 @@
+--[[
+    ██╗     ██╗  ██╗██████╗        ██████╗██╗      ██████╗ ████████╗██╗  ██╗██╗███╗   ██╗ ██████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██║     ██╔═══██╗╚══██╔══╝██║  ██║██║████╗  ██║██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║     ██║   ██║   ██║   ███████║██║██╔██╗ ██║██║  ███╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║     ██║   ██║   ██║   ██╔══██║██║██║╚██╗██║██║   ██║
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗███████╗╚██████╔╝   ██║   ██║  ██║██║██║ ╚████║╚██████╔╝
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝╚══════╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+    🐺 LXR Clothing System — Configuration
+    Shared configuration file for lxr-clothing
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    SERVER INFORMATION
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
+]]
+
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- 🐺 RESOURCE NAME PROTECTION - RUNTIME CHECK
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+local REQUIRED_RESOURCE_NAME = 'lxr-clothing'
+local currentResourceName    = GetCurrentResourceName()
+
+if currentResourceName ~= REQUIRED_RESOURCE_NAME then
+    error(string.format([[
+
+        ═══════════════════════════════════════════════════════════════════════════════
+        ❌ CRITICAL ERROR: RESOURCE NAME MISMATCH ❌
+        ═══════════════════════════════════════════════════════════════════════════════
+
+        Expected: %s
+        Got:      %s
+
+        This resource is branded and must maintain the correct name.
+        Rename the folder to "%s" to continue.
+
+        🐺 wolves.land — The Land of Wolves
+
+        ═══════════════════════════════════════════════════════════════════════════════
+
+    ]], REQUIRED_RESOURCE_NAME, currentResourceName, REQUIRED_RESOURCE_NAME))
+end
+
 Config = {}
+
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ SERVER BRANDING & INFO ████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
+
+Config.ServerInfo = {
+    name      = 'The Land of Wolves 🐺',
+    developer = 'iBoss21 / The Lux Empire',
+    website   = 'https://www.wolves.land',
+    discord   = 'https://discord.gg/CrKcWdfd3A',
+    store     = 'https://theluxempire.tebex.io',
+    github    = 'https://github.com/iBoss21',
+}
+
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ FRAMEWORK CONFIGURATION ███████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
+
+--[[
+    Framework Priority (in order):
+    1. LXR-Core  (Primary)
+    2. RSG-Core  (Primary)
+    3. VORP Core (Supported)
+    4. Standalone (Fallback)
+]]
+
+Config.Framework = 'auto' -- 'auto' | 'lxr-core' | 'rsg-core' | 'vorp_core' | 'standalone'
+
+-- ████████████████████████████████████████████████████████████████████████████████
+-- ████████████████████████ CLOTHING ROOM & STORES ████████████████████████████████
+-- ████████████████████████████████████████████████████████████████████████████████
 
 Config.StaticClothingRoom = vector4(-767.76, -1295.21, 43.84, 286.88)
 

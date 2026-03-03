@@ -1,3 +1,28 @@
+--[[
+    ██╗     ██╗  ██╗██████╗        ██████╗██╗      ██████╗ ████████╗██╗  ██╗██╗███╗   ██╗ ██████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██║     ██╔═══██╗╚══██╔══╝██║  ██║██║████╗  ██║██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║     ██║   ██║   ██║   ███████║██║██╔██╗ ██║██║  ███╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║     ██║   ██║   ██║   ██╔══██║██║██║╚██╗██║██║   ██║
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗███████╗╚██████╔╝   ██║   ██║  ██║██║██║ ╚████║╚██████╔╝
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝╚══════╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+    🐺 LXR Clothing System — Client Main
+    Client-side UI, camera, and clothing/skin management
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    SERVER INFORMATION
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
+]]
+
 -- GLOBAL CLIENT VARIABLES
 NewPlayer = false
 Camera = -1
@@ -26,12 +51,12 @@ end)
 -- clothing shops prompts and blips
 CreateThread(function()
     for clothing, v in pairs(Config.Stores) do
-        exports['lxr-core']:createPrompt(v.location..'-clothing', v.coords, 0xF3830D8E, 'Open ' .. v.name, { -- [J]
+        Framework.CreatePrompt(v.location..'-clothing', v.coords, 0xF3830D8E, 'Open ' .. v.name, { -- [J]
 			type = 'client',
 			event = 'lxr-clothing:client:openMenu',
 			args = {false, 'clothingMenu'}
         })
-		exports['lxr-core']:createPrompt(v.location..'-outfits', v.coords, 0xC7B5340A, 'Open Outfits', { -- ["ENTER"]
+		Framework.CreatePrompt(v.location..'-outfits', v.coords, 0xC7B5340A, 'Open Outfits', { -- ["ENTER"]
             type = 'client',
             event = 'lxr-clothing:client:openMenu',
             args = {false, 'outfitMenu'},
@@ -53,6 +78,21 @@ AddEventHandler('onResourceStart', function(resource)
 end)
 
 RegisterNetEvent('LXRCore:Client:OnPlayerLoaded', function()
+    if NetworkIsInTutorialSession() then
+        NetworkEndTutorialSession()
+        print('removing from session')
+    end
+end)
+
+-- RSG-Core and VORP equivalent player-loaded listener
+RegisterNetEvent('RSGCore:Client:OnPlayerLoaded', function()
+    if NetworkIsInTutorialSession() then
+        NetworkEndTutorialSession()
+        print('removing from session')
+    end
+end)
+
+RegisterNetEvent('VORP:SelectedCharacter', function()
     if NetworkIsInTutorialSession() then
         NetworkEndTutorialSession()
         print('removing from session')
@@ -161,8 +201,7 @@ RegisterNUICallback('save', function()
         DoScreenFadeOut(150)
         --exports['lxr-weathersync']:enableSync()
         Citizen.Wait(500)
-        TriggerServerEvent('LXRCore:Server:OnPlayerLoaded')
-        TriggerEvent('LXRCore:Client:OnPlayerLoaded')
+        Framework.TriggerPlayerLoaded()
         --SetEntityCoords(playerPed, 1359.57, -1301.45, 77.76) -- not sure why this was put here.
         DisableCamera()
         if NetworkIsInTutorialSession() then
@@ -245,7 +284,7 @@ OpenMenu = function(newPlayer, menuType)
         })
     elseif menuType == 'outfitMenu' then
         ClothingRoomTransition(Config.StaticClothingRoom, true)
-        exports['lxr-core']:TriggerCallback('lxr-clothing:server:getOutfits', function(outfits)
+        Framework.TriggerCallback('lxr-clothing:server:getOutfits', function(outfits)
             SendNUIMessage({
                 type = 'outfitMenu',
                 outfits = outfits
@@ -267,7 +306,7 @@ OpenMenu = function(newPlayer, menuType)
         })
     elseif menuType == 'allMenu' then
         ClothingRoomTransition(Config.StaticClothingRoom, true)
-        exports['lxr-core']:TriggerCallback('lxr-clothing:server:getOutfits', function(outfits)
+        Framework.TriggerCallback('lxr-clothing:server:getOutfits', function(outfits)
             local skins = GetSkinMaxValues()
             local clothes = GetClothesMaxValues()
             SendNUIMessage({
@@ -464,8 +503,8 @@ RegisterCommand('clothingmenu', function()
 end)
 
 RegisterCommand('loadcharacter', function()
-    local citizenid = exports['lxr-core']:GetPlayerData().citizenid
-    exports['lxr-core']:TriggerCallback('lxr-multicharacter:server:getSkin', function(data)
+    local citizenid = Framework.GetPlayerData().citizenid
+    Framework.TriggerCallback('lxr-multicharacter:server:getSkin', function(data)
         local playerPed = PlayerPedId()
         LoadSkin(playerPed, data.skin)
         LoadClothes(playerPed, data.clothes, false)
