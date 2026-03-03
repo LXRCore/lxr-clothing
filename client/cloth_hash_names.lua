@@ -1,4 +1,28 @@
- 
+--[[
+    ██╗     ██╗  ██╗██████╗        ██████╗██╗      ██████╗ ████████╗██╗  ██╗██╗███╗   ██╗ ██████╗
+    ██║     ╚██╗██╔╝██╔══██╗      ██╔════╝██║     ██╔═══██╗╚══██╔══╝██║  ██║██║████╗  ██║██╔════╝
+    ██║      ╚███╔╝ ██████╔╝█████╗██║     ██║     ██║   ██║   ██║   ███████║██║██╔██╗ ██║██║  ███╗
+    ██║      ██╔██╗ ██╔══██╗╚════╝██║     ██║     ██║   ██║   ██║   ██╔══██║██║██║╚██╗██║██║   ██║
+    ███████╗██╔╝ ██╗██║  ██║      ╚██████╗███████╗╚██████╔╝   ██║   ██║  ██║██║██║ ╚████║╚██████╔╝
+    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝       ╚═════╝╚══════╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+    🐺 LXR Clothing System — Clothing Hash Names
+    RedM ped component hash tables for male and female models
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    SERVER INFORMATION
+    ═══════════════════════════════════════════════════════════════════════════════
+
+    Server:    The Land of Wolves 🐺
+    Developer: iBoss21 / The Lux Empire
+    Website:   https://www.wolves.land
+    Discord:   https://discord.gg/CrKcWdfd3A
+    Store:     https://theluxempire.tebex.io
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    © 2026 iBoss21 / The Lux Empire | wolves.land | All Rights Reserved
+]]
+
  -- https://raw.githubusercontent.com/femga/rdr3_discoveries/master/clothes/cloth_hash_names.lua
 
  Skins = {
